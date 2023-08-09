@@ -26,14 +26,14 @@ public class Book {
     private List<Author> authors = new ArrayList<>();
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    private Category categories;
+    private Category category;
 
     public Book(String name, Date publicationDate, Integer price, List<Author> authors, Category categories) {
         this.name = name;
         this.publicationDate = publicationDate;
         this.price = price;
         this.authors = authors;
-        this.categories = categories;
+        this.category = categories;
     }
 
     public void addAuthor(Author author) {
