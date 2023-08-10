@@ -17,12 +17,10 @@ import java.util.stream.StreamSupport;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final BookService bookService;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository, BookService bookService) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.bookService = bookService;
     }
 
 

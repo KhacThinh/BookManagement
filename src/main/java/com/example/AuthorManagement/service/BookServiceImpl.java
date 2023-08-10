@@ -137,6 +137,7 @@ public class BookServiceImpl implements BookService {
         return mapper.bookToBookResponseDto(book);
     }
 
+    @Transactional
     @Override
     public BookResponseDto addCategoryToBook(Long bookId, Long categoryId) {
         Book book = getBook(bookId);
@@ -146,9 +147,11 @@ public class BookServiceImpl implements BookService {
         }
         book.setCategory(category);
         category.addBook(book);
+        bookRepository.save(book);
         return mapper.bookToBookResponseDto(book);
     }
 
+    @Transactional
     @Override
     public BookResponseDto removeCategoryFromBook(Long bookId, Long categoryId) {
         Book book = getBook(bookId);
@@ -158,6 +161,7 @@ public class BookServiceImpl implements BookService {
         }
         book.setCategory(null);
         category.deleteBook(book);
+        bookRepository.save(book);
         return mapper.bookToBookResponseDto(book);
     }
 }
