@@ -16,7 +16,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Book> books = new ArrayList<>();
 
     public Category(String name, List<Book> books) {
@@ -24,11 +24,11 @@ public class Category {
         this.books = books;
     }
 
-    private void addBook(Book book) {
+    public void addBook(Book book) {
         books.add(book);
     }
 
-    private void deleteBook(Book book) {
+    public void deleteBook(Book book) {
         books.remove(book);
     }
 }
