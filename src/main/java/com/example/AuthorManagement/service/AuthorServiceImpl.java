@@ -53,12 +53,13 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = new Author();
         author.setName(authorRequestDto.getName());
         author.setGender(authorRequestDto.isGender());
+        author.setAddress(authorRequestDto.getAddress());
         author.setBirthDate(authorRequestDto.getBirthDate());
         author.setBiography(authorRequestDto.getBioGraphy());
-        ZipCode zipCode = zipCodeService.getZipCode(authorRequestDto.getZipCodeId());
-        if (!(Objects.nonNull(zipCode))) {
-            throw new IllegalArgumentException("author need a zipcode");
+        if (zipCodeService.getZipCode(authorRequestDto.getZipCodeId()) == null) {
+            throw new IllegalArgumentException("author need a zipcode!");
         }
+        ZipCode zipCode = zipCodeService.getZipCode(authorRequestDto.getZipCodeId());
         author.setZipCode(zipCode);
         authorRepository.save(author);
         return mapper.authorToAuthorResponseDto(author);
@@ -70,6 +71,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = getAuthor(authorId);
         author.setName(authorRequestDto.getName());
         author.setGender(authorRequestDto.isGender());
+        author.setAddress(authorRequestDto.getAddress());
         author.setBirthDate(authorRequestDto.getBirthDate());
         author.setBiography(authorRequestDto.getBioGraphy());
         if (authorRequestDto.getZipCodeId() != null) {
@@ -84,10 +86,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponseDto deleteAuthor(Long authorId) {
         Author author = getAuthor(authorId);
+        author.setZipCode(null);
         authorRepository.delete(author);
         return mapper.authorToAuthorResponseDto(author);
     }
 
+    @Transactional
     @Override
     public AuthorResponseDto addZipcodeToAuthor(Long authorId, Long zipCodeId) {
         Author author = getAuthor(authorId);
@@ -96,13 +100,16 @@ public class AuthorServiceImpl implements AuthorService {
             throw new IllegalArgumentException("author already has a zipCode");
         }
         author.setZipCode(zipCode);
+        authorRepository.save(author);
         return mapper.authorToAuthorResponseDto(author);
     }
 
+    @Transactional
     @Override
-    public AuthorResponseDto removeZipcodeFromAuthor(Long authorId, Long zipCodeId) {
+    public AuthorResponseDto removeZipcodeFromAuthor(Long authorId) {
         Author author = getAuthor(authorId);
         author.setZipCode(null);
+        authorRepository.save(author);
         return mapper.authorToAuthorResponseDto(author);
     }
 }

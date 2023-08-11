@@ -1,5 +1,6 @@
 package com.example.AuthorManagement.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class ZipCode {
     private String name;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private City city;
 
     public ZipCode(String name, City city) {

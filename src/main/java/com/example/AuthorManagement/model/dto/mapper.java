@@ -6,9 +6,11 @@ import com.example.AuthorManagement.model.dto.responseDto.CategoryResponseDto;
 import com.example.AuthorManagement.model.entities.Author;
 import com.example.AuthorManagement.model.entities.Book;
 import com.example.AuthorManagement.model.entities.Category;
+import com.example.AuthorManagement.model.entities.ZipCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class mapper {
     public static CategoryResponseDto categoryToCategoryResponseDto(Category category) {
@@ -64,7 +66,12 @@ public class mapper {
         authorResponseDto.setAddress(author.getAddress());
         authorResponseDto.setBirthDate(author.getBirthDate());
         authorResponseDto.setBiography(author.getBiography());
-        authorResponseDto.setZipCodeName(author.getZipCode().getName());
+        ZipCode zipCode = author.getZipCode();
+        if (Objects.nonNull(zipCode)) {
+            authorResponseDto.setZipCodeName(zipCode.getName());
+        } else {
+            authorResponseDto.setZipCodeName(null);
+        }
         List<String> names = new ArrayList<>();
         List<Book> books = author.getBooks();
         for (Book book : books) {

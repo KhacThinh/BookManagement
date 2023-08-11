@@ -27,20 +27,20 @@ public class CityController {
     }
 
     @GetMapping("/findId/{CitId}")
-    public ResponseEntity<City> findCity(@PathVariable(name = "CitId") Long CitId) {
+    public ResponseEntity<City> findByIdCity(@PathVariable Long CitId) {
         City city = cityService.getCity(CitId);
         return new ResponseEntity<>(city, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<City> addCity(@RequestBody CityRequestDto cityRequestDto) {
+    public ResponseEntity<City> saveCity(@RequestBody CityRequestDto cityRequestDto) {
         City city = cityService.addCity(cityRequestDto);
         return new ResponseEntity<>(city, HttpStatus.OK);
     }
 
     @PutMapping("/update/{CitId}")
     public ResponseEntity<City> updateCity(
-            @PathVariable("CitId") Long CitId,
+            @PathVariable Long CitId,
             @RequestBody CityRequestDto cityRequestDto
     ) {
         City city = cityService.editCity(CitId, cityRequestDto);
@@ -48,7 +48,7 @@ public class CityController {
     }
 
     @DeleteMapping("/delete/{CitId}")
-    public ResponseEntity<City> deleteCity(@PathVariable("CitId") Long CitId) {
+    public ResponseEntity<City> deleteCity(@PathVariable Long CitId) {
         City city = cityService.deleteCity(CitId);
         return new ResponseEntity<>(city, HttpStatus.OK);
     }

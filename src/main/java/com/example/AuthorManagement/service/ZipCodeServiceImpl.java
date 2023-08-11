@@ -35,7 +35,7 @@ public class ZipCodeServiceImpl implements ZipCodeService {
     @Override
     public ZipCode addZipCode(ZipCodeRequestDto zipCodeRequestDto) {
         ZipCode zipCode = new ZipCode();
-        zipCode.setName(zipCode.getName());
+        zipCode.setName(zipCodeRequestDto.getName());
         if (zipCodeRequestDto.getCityId() == null) {
             return zipCodeRepository.save(zipCode);
         }
@@ -47,7 +47,7 @@ public class ZipCodeServiceImpl implements ZipCodeService {
     @Override
     public ZipCode getZipCode(Long zipCodeId) {
         ZipCode zipCode = zipCodeRepository.findById(zipCodeId).orElseThrow(() ->
-                new IllegalArgumentException("Not found zipCode with id " + zipCodeId)
+                new IllegalArgumentException("Not found zipCode with id " + zipCodeId + "!")
         );
         return zipCode;
     }
@@ -68,7 +68,7 @@ public class ZipCodeServiceImpl implements ZipCodeService {
     @Transactional
     @Override
     public ZipCode deleteZipCode(Long zipCodeId) {
-        ZipCode zipCode = getZipCode(zipCodeId);
+        ZipCode zipCode = removeCityFromZipCode(zipCodeId);
         zipCodeRepository.delete(zipCode);
         return zipCode;
     }

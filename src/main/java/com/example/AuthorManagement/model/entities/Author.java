@@ -1,5 +1,6 @@
 package com.example.AuthorManagement.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Author {
     private List<Book> books = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "zipCode_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ZipCode zipCode;
 
     public Author(String name, boolean gender, String address, Date birthDate, String biography, List<Book> books, ZipCode zipCode) {

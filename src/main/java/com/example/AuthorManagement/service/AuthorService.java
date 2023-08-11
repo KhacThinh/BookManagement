@@ -23,5 +23,5 @@ public interface AuthorService {
 
     public AuthorResponseDto addZipcodeToAuthor(Long authorId, Long zipCodeId);
 
-    public AuthorResponseDto removeZipcodeFromAuthor(Long authorId, Long zipCodeId);
+    public AuthorResponseDto removeZipcodeFromAuthor(Long authorId);
 }
