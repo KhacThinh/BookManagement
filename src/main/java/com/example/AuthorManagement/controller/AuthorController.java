@@ -28,37 +28,37 @@ public class AuthorController {
 
     @PostMapping("")
     public ResponseEntity<AuthorResponseDto> saveAuthor(
-            @RequestBody AuthorRequestDto authorRequestDto) {
+            @RequestBody final AuthorRequestDto authorRequestDto) {
         AuthorResponseDto authorResponseDto = authorService.addAuthor(authorRequestDto);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
 
     @PutMapping("/{authorId}")
     public ResponseEntity<AuthorResponseDto> editAuthor(
-            @PathVariable Long authorId,
-            @RequestBody AuthorRequestDto authorRequestDto) {
+            @PathVariable final Long authorId,
+            @RequestBody final AuthorRequestDto authorRequestDto) {
         AuthorResponseDto authorResponseDto = authorService.editAuthor(authorId, authorRequestDto);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{authorId}")
     public ResponseEntity<AuthorResponseDto> deleteAuthor(
-            @PathVariable Long authorId) {
+            @PathVariable final Long authorId) {
         AuthorResponseDto authorResponseDto = authorService.deleteAuthor(authorId);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/find/{authorId}")
     public ResponseEntity<AuthorResponseDto> findByIdAuthor(
-            @PathVariable Long authorId) {
+            @PathVariable final Long authorId) {
         AuthorResponseDto authorResponseDto = authorService.getAuthorById(authorId);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/addZipCodeToAuthor")
     public ResponseEntity<AuthorResponseDto> addZipCodeToAuthor(
-            @RequestParam Long authorId,
-            @RequestParam Long zipCodeId
+            @RequestParam final Long authorId,
+            @RequestParam final Long zipCodeId
     ) {
         AuthorResponseDto authorResponseDto = authorService.addZipcodeToAuthor(authorId, zipCodeId);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
@@ -66,7 +66,7 @@ public class AuthorController {
 
     @PostMapping("/removeZipCodeFromAuthor/{authorId}")
     public ResponseEntity<AuthorResponseDto> addZipCodeToAuthor(
-            @PathVariable Long authorId
+            @PathVariable final Long authorId
     ) {
         AuthorResponseDto authorResponseDto = authorService.removeZipcodeFromAuthor(authorId);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);

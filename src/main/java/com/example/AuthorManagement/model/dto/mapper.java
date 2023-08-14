@@ -46,7 +46,11 @@ public class mapper {
             names.add(author.getName());
         }
         bookResponseDto.setAuthorNames(names);
-        bookResponseDto.setCategoryName(book.getCategory().getName());
+        if (Objects.isNull(book.getCategory())) {
+            bookResponseDto.setCategoryName(null);
+        } else {
+            bookResponseDto.setCategoryName(book.getCategory().getName());
+        }
         return bookResponseDto;
     }
 
@@ -67,16 +71,17 @@ public class mapper {
         authorResponseDto.setBirthDate(author.getBirthDate());
         authorResponseDto.setBiography(author.getBiography());
         ZipCode zipCode = author.getZipCode();
-        if (Objects.nonNull(zipCode)) {
-            authorResponseDto.setZipCodeName(zipCode.getName());
-        } else {
-            authorResponseDto.setZipCodeName(null);
-        }
         List<String> names = new ArrayList<>();
+        if (Objects.isNull(zipCode)) {
+            authorResponseDto.setZipCodeName(null);
+        } else {
+            authorResponseDto.setZipCodeName(zipCode.getName());
+        }
         List<Book> books = author.getBooks();
         for (Book book : books) {
             names.add(book.getName());
         }
+        authorResponseDto.setBookNames(names);
         return authorResponseDto;
     }
 

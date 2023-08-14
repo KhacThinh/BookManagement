@@ -21,4 +21,6 @@ public interface CategoryService {
 
     public CategoryResponseDto deleteCategory(Long categoryId);
 
+    public List<CategoryResponseDto> findByNameContainingIgnoreCase(String name);
+
 }

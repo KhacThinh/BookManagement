@@ -70,4 +70,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
         return mapper.categoryToCategoryResponseDto(category);
     }
+
+    @Override
+    public List<CategoryResponseDto> findByNameContainingIgnoreCase(String name) {
+        List<Category> categories = categoryRepository.findByNameContainingIgnoreCase(name);
+        return mapper.categoriesToCategoriesResponseDto(categories);
+    }
 }

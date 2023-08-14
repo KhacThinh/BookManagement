@@ -37,7 +37,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author getAuthor(Long authorId) {
         Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new IllegalArgumentException("Not found author with id " + authorId));
+                .orElseThrow(() -> new IllegalArgumentException("Not found author with id " + authorId + "!"));
         return author;
     }
 
@@ -56,7 +56,7 @@ public class AuthorServiceImpl implements AuthorService {
         author.setAddress(authorRequestDto.getAddress());
         author.setBirthDate(authorRequestDto.getBirthDate());
         author.setBiography(authorRequestDto.getBioGraphy());
-        if (zipCodeService.getZipCode(authorRequestDto.getZipCodeId()) == null) {
+        if (Objects.isNull(zipCodeService.getZipCode(authorRequestDto.getZipCodeId()))) {
             throw new IllegalArgumentException("author need a zipcode!");
         }
         ZipCode zipCode = zipCodeService.getZipCode(authorRequestDto.getZipCodeId());
@@ -74,7 +74,7 @@ public class AuthorServiceImpl implements AuthorService {
         author.setAddress(authorRequestDto.getAddress());
         author.setBirthDate(authorRequestDto.getBirthDate());
         author.setBiography(authorRequestDto.getBioGraphy());
-        if (authorRequestDto.getZipCodeId() != null) {
+        if (Objects.nonNull(authorRequestDto.getZipCodeId())) {
             ZipCode zipCode = zipCodeService.getZipCode(authorRequestDto.getZipCodeId());
             author.setZipCode(zipCode);
         }

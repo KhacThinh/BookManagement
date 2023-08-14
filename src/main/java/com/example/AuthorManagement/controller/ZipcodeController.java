@@ -28,36 +28,39 @@ public class ZipcodeController {
 
 
     @GetMapping("/findById/{idZipCode}")
-    public ResponseEntity<ZipCode> findByIdZipCode(@PathVariable Long idZipCode) {
+    public ResponseEntity<ZipCode> findByIdZipCode(
+            @PathVariable final Long idZipCode) {
         ZipCode zipCode = zipCodeService.getZipCode(idZipCode);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<ZipCode> saveZipCode(@RequestBody ZipCodeRequestDto zipCodeRequestDto) {
+    public ResponseEntity<ZipCode> saveZipCode(
+            @RequestBody final ZipCodeRequestDto zipCodeRequestDto) {
         ZipCode zipCode = zipCodeService.addZipCode(zipCodeRequestDto);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);
     }
 
     @PutMapping("/edit/{idZipCode}")
     public ResponseEntity<ZipCode> editZipCode(
-            @PathVariable Long idZipCode,
-            @RequestBody ZipCodeRequestDto zipCodeRequestDto
+            @PathVariable final Long idZipCode,
+            @RequestBody final ZipCodeRequestDto zipCodeRequestDto
     ) {
         ZipCode zipCode = zipCodeService.editZipCode(idZipCode, zipCodeRequestDto);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{idZipCode}")
-    public ResponseEntity<ZipCode> editZipCode(@PathVariable Long idZipCode) {
+    public ResponseEntity<ZipCode> editZipCode(
+            @PathVariable final Long idZipCode) {
         ZipCode zipCode = zipCodeService.deleteZipCode(idZipCode);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);
     }
 
     @PostMapping("/addCityToZipCode")
     public ResponseEntity<ZipCode> addCityToZipCode(
-            @RequestParam(value = "idZipCode") Long idZipCode,
-            @RequestParam(value = "idCity") Long idCity
+            @RequestParam(value = "idZipCode") final Long idZipCode,
+            @RequestParam(value = "idCity") final Long idCity
     ) {
         ZipCode zipCode = zipCodeService.addCityToZipCode(idZipCode, idCity);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);
@@ -65,7 +68,7 @@ public class ZipcodeController {
 
     @PostMapping("/removeCityFromZipCode/{idZipCode}")
     public ResponseEntity<ZipCode> removeCityFromZipCode(
-            @PathVariable Long idZipCode
+            @PathVariable final Long idZipCode
     ) {
         ZipCode zipCode = zipCodeService.removeCityFromZipCode(idZipCode);
         return new ResponseEntity<>(zipCode, HttpStatus.OK);

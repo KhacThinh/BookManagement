@@ -55,9 +55,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponseDto addBook(BookRequestDto bookRequestDto) {
         Book book = new Book();
-        book.setName(book.getName());
-        book.setPrice(book.getPrice());
-        book.setPublicationDate(book.getPublicationDate());
+        book.setName(bookRequestDto.getName());
+        book.setPrice(bookRequestDto.getPrice());
+        book.setPublicationDate(bookRequestDto.getPublicationDate());
         if (bookRequestDto.getAuthorIds().isEmpty()) {
             throw new IllegalArgumentException("book need an author");
         } else {
@@ -68,7 +68,7 @@ public class BookServiceImpl implements BookService {
             }
             book.setAuthors(authors);
         }
-        if (bookRequestDto.getCategoryId() != null) {
+        if (Objects.isNull(bookRequestDto.getCategoryId())) {
             throw new IllegalArgumentException("book need a category");
         }
         Category category = categoryService.getCategory(bookRequestDto.getCategoryId());
@@ -127,12 +127,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponseDto removeAuthorFromBook(Long bookId, Long authorId) {
         Book book = getBook(bookId);
-        Author author = new Author();
+        Author author = authorService.getAuthor(authorId);
         for (Author authors : book.getAuthors()) {
-            if (authors.equals(author)) {
-                book.deleteAuthor(author);
+            if (!(authors.equals(author))) {
+                throw new IllegalArgumentException("author does not have this author!");
             }
         }
+        author.deleteBook(book);
+        book.deleteAuthor(author);
         bookRepository.save(book);
         return mapper.bookToBookResponseDto(book);
     }
@@ -156,7 +158,7 @@ public class BookServiceImpl implements BookService {
     public BookResponseDto removeCategoryFromBook(Long bookId, Long categoryId) {
         Book book = getBook(bookId);
         Category category = categoryService.getCategory(categoryId);
-        if (!(Objects.nonNull(book))) {
+        if (Objects.isNull(book)) {
             throw new IllegalArgumentException("book does not have a category to delete");
         }
         book.setCategory(null);
