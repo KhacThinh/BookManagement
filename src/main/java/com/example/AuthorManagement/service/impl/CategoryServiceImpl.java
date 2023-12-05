@@ -1,10 +1,11 @@
-package com.example.AuthorManagement.service;
+package com.example.AuthorManagement.service.impl;
 
 import com.example.AuthorManagement.model.dto.mapper;
 import com.example.AuthorManagement.model.dto.requestDto.CategoryRequestDto;
 import com.example.AuthorManagement.model.dto.responseDto.CategoryResponseDto;
 import com.example.AuthorManagement.model.entities.Category;
 import com.example.AuthorManagement.repositories.CategoryRepository;
+import com.example.AuthorManagement.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 

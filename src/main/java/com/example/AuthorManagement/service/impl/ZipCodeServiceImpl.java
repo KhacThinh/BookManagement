@@ -1,9 +1,11 @@
-package com.example.AuthorManagement.service;
+package com.example.AuthorManagement.service.impl;
 
 import com.example.AuthorManagement.model.dto.requestDto.ZipCodeRequestDto;
 import com.example.AuthorManagement.model.entities.City;
 import com.example.AuthorManagement.model.entities.ZipCode;
 import com.example.AuthorManagement.repositories.ZipCodeRepository;
+import com.example.AuthorManagement.service.CityService;
+import com.example.AuthorManagement.service.ZipCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class ZipCodeServiceImpl implements ZipCodeService {
+class ZipCodeServiceImpl implements ZipCodeService {
 
     private final ZipCodeRepository zipCodeRepository;
     private final CityService cityService;

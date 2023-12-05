@@ -19,6 +19,7 @@ public interface AuthorService {
 
     public AuthorResponseDto editAuthor(Long authorId, AuthorRequestDto authorRequestDto);
 
+    public AuthorResponseDto patchAuthor(Long authorId, AuthorRequestDto authorRequestDto);
     public AuthorResponseDto deleteAuthor(Long authorId);
 
     public AuthorResponseDto addZipcodeToAuthor(Long authorId, Long zipCodeId);

@@ -66,7 +66,7 @@ public class mapper {
         AuthorResponseDto authorResponseDto = new AuthorResponseDto();
         authorResponseDto.setId(author.getId());
         authorResponseDto.setName(author.getName());
-        authorResponseDto.setGender(author.isGender());
+        authorResponseDto.setGender(author.getGender());
         authorResponseDto.setAddress(author.getAddress());
         authorResponseDto.setBirthDate(author.getBirthDate());
         authorResponseDto.setBiography(author.getBiography());

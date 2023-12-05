@@ -19,6 +19,8 @@ public interface BookService {
 
     public BookResponseDto editBook(Long bookId, BookRequestDto bookRequestDto);
 
+    public BookResponseDto patchBook(Long bookId, BookRequestDto bookRequestDto);
+
     public BookResponseDto deleteBook(Long bookId);
 
     public BookResponseDto addAuthorToBook(Long bookId, Long authorId);

@@ -1,4 +1,4 @@
-package com.example.AuthorManagement.service;
+package com.example.AuthorManagement.service.impl;
 
 import com.example.AuthorManagement.model.dto.mapper;
 import com.example.AuthorManagement.model.dto.requestDto.BookRequestDto;
@@ -7,18 +7,24 @@ import com.example.AuthorManagement.model.entities.Author;
 import com.example.AuthorManagement.model.entities.Book;
 import com.example.AuthorManagement.model.entities.Category;
 import com.example.AuthorManagement.repositories.BookRepository;
+import com.example.AuthorManagement.service.AuthorService;
+import com.example.AuthorManagement.service.BookService;
+import com.example.AuthorManagement.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class BookServiceImpl implements BookService {
+class BookServiceImpl implements BookService {
     private final CategoryService categoryService;
     private final AuthorService authorService;
     private final BookRepository bookRepository;
@@ -61,11 +67,10 @@ public class BookServiceImpl implements BookService {
         if (bookRequestDto.getAuthorIds().isEmpty()) {
             throw new IllegalArgumentException("book need an author");
         } else {
-            List<Author> authors = new ArrayList<>();
-            for (Long authorId : bookRequestDto.getAuthorIds()) {
-                Author author = authorService.getAuthor(authorId);
-                authors.add(author);
-            }
+            List<Author> authors = bookRequestDto.getAuthorIds()
+                    .stream()
+                    .map(authorService::getAuthor)
+                    .collect(Collectors.toList());
             book.setAuthors(authors);
         }
         if (Objects.isNull(bookRequestDto.getCategoryId())) {
@@ -89,7 +94,7 @@ public class BookServiceImpl implements BookService {
             book.setCategory(category);
         }
         if (bookRequestDto.getAuthorIds().isEmpty()) {
-            throw new IllegalArgumentException("book need a category");
+            throw new IllegalArgumentException("book need a author");
         } else {
             List<Author> authors = new ArrayList<>();
             for (Long authorId : bookRequestDto.getAuthorIds()) {
@@ -101,6 +106,26 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
         return mapper.bookToBookResponseDto(book);
 
+    }
+
+    @Override
+    public BookResponseDto patchBook(Long bookId, BookRequestDto bookRequestDto) {
+        Book book = getBook(bookId);
+        Optional.ofNullable(bookRequestDto.getName()).ifPresent(book::setName);
+        Optional.ofNullable(bookRequestDto.getPrice()).ifPresent(book::setPrice);
+        Optional.ofNullable(bookRequestDto.getPublicationDate()).ifPresent(book::setPublicationDate);
+        Optional.ofNullable(bookRequestDto.getCategoryId())
+                .map(categoryService::getCategory)
+                .ifPresent(book::setCategory);
+        List<Long> AuthorIds = Optional.ofNullable(bookRequestDto.getAuthorIds()).orElse(Collections.emptyList());
+        if (!AuthorIds.isEmpty()) {
+            book.setAuthors(bookRequestDto.getAuthorIds().stream()
+                    .map(authorService::getAuthor)
+                    .collect(Collectors.toList())
+            );
+        }
+        bookRepository.save(book);
+        return mapper.bookToBookResponseDto(book);
     }
 
     @Override

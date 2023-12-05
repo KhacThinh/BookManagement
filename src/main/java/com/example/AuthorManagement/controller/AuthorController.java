@@ -3,6 +3,7 @@ package com.example.AuthorManagement.controller;
 import com.example.AuthorManagement.model.dto.requestDto.AuthorRequestDto;
 import com.example.AuthorManagement.model.dto.responseDto.AuthorResponseDto;
 import com.example.AuthorManagement.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class AuthorController {
 
     @PostMapping("")
     public ResponseEntity<AuthorResponseDto> saveAuthor(
-            @RequestBody final AuthorRequestDto authorRequestDto) {
+            @RequestBody @Valid final AuthorRequestDto authorRequestDto) {
         AuthorResponseDto authorResponseDto = authorService.addAuthor(authorRequestDto);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
@@ -36,8 +37,16 @@ public class AuthorController {
     @PutMapping("/{authorId}")
     public ResponseEntity<AuthorResponseDto> editAuthor(
             @PathVariable final Long authorId,
-            @RequestBody final AuthorRequestDto authorRequestDto) {
+            @RequestBody @Valid final AuthorRequestDto authorRequestDto) {
         AuthorResponseDto authorResponseDto = authorService.editAuthor(authorId, authorRequestDto);
+        return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{authorId}")
+    public ResponseEntity<AuthorResponseDto> patchAuthor(
+            @PathVariable final Long authorId,
+            @RequestBody @Valid final AuthorRequestDto authorRequestDto) {
+        AuthorResponseDto authorResponseDto = authorService.patchAuthor(authorId, authorRequestDto);
         return new ResponseEntity<>(authorResponseDto, HttpStatus.OK);
     }
 

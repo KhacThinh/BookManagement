@@ -1,8 +1,9 @@
-package com.example.AuthorManagement.service;
+package com.example.AuthorManagement.service.impl;
 
 import com.example.AuthorManagement.model.dto.requestDto.CityRequestDto;
 import com.example.AuthorManagement.model.entities.City;
 import com.example.AuthorManagement.repositories.CityRepository;
+import com.example.AuthorManagement.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CityServiceImpl implements CityService {
+class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
 
     @Autowired

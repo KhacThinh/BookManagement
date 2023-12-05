@@ -4,6 +4,7 @@ import com.example.AuthorManagement.model.dto.requestDto.BookRequestDto;
 import com.example.AuthorManagement.model.dto.responseDto.BookResponseDto;
 import com.example.AuthorManagement.service.BookService;
 import io.swagger.models.Response;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -26,7 +27,7 @@ public class BookController {
 
     @PostMapping("")
     public ResponseEntity<BookResponseDto> saveBook(
-            @RequestBody final BookRequestDto bookRequestDto) {
+            @RequestBody @Valid final BookRequestDto bookRequestDto) {
         BookResponseDto bookResponseDto = bookService.addBook(bookRequestDto);
         return new ResponseEntity<>(bookResponseDto, HttpStatus.OK);
     }
@@ -34,8 +35,16 @@ public class BookController {
     @PutMapping("/{bookId}")
     public ResponseEntity<BookResponseDto> editBook(
             @PathVariable final Long bookId,
-            @RequestBody final BookRequestDto bookRequestDto) {
+            @RequestBody @Valid final BookRequestDto bookRequestDto) {
         BookResponseDto bookResponseDto = bookService.editBook(bookId, bookRequestDto);
+        return new ResponseEntity<>(bookResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{bookId}")
+    public ResponseEntity<BookResponseDto> patchBook(
+            @PathVariable final Long bookId,
+            @RequestBody @Valid final BookRequestDto bookRequestDto) {
+        BookResponseDto bookResponseDto = bookService.patchBook(bookId, bookRequestDto);
         return new ResponseEntity<>(bookResponseDto, HttpStatus.OK);
     }
 

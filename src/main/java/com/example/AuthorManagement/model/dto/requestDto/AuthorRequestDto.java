@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class AuthorRequestDto {
     private String name;
-    private boolean gender;
+    private Boolean gender;
     private String address;
     private Date birthDate;
     private String bioGraphy;
